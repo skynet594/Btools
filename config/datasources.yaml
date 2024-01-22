@@ -1,0 +1,239 @@
+datasources:
+  - name: 360PassiveDNS
+    ttl: 3600
+    creds:
+      account: 
+        apikey: null
+  - name: ASNLookup
+    creds:
+      account: 
+        apikey: null
+  - name: Ahrefs
+    ttl: 4320
+    creds:
+      account: 
+        apikey: null
+  - name: AlienVault
+    creds:
+      account: 
+        apikey: f30a3fe8dceb1fbc4633f2fec74710547e1320f4cd52ca20b002a8decebe148c
+
+  - name: BeVigil
+    creds:
+      account: 
+        apikey: XPiQyO1HbiEZlYgV
+  - name: BigDataCloud
+    creds:
+      account: 
+        apikey: bdc_c2c25d2af95049dba448a3a0079cc559
+  - name: BinaryEdge
+    ttl: 10080
+    creds:
+      account: 
+        apikey: ce6e20ee-b187-4fed-8d3b-06fee6fca5b2
+  - name: BufferOver
+    creds:
+      account: 
+        apikey: JcPBx1V2j35QRENlTIEJF8p43FcP1UDP5LZYLazk
+  - name: BuiltWith
+    ttl: 10080
+    creds:
+      account: 
+        apikey: 1e61f2d4-abb0-46c1-83d9-f86a33e73ae0
+  - name: C99
+    ttl: 4320
+    creds:
+      account1: 
+        apikey: null
+      account2: 
+        apikey: null
+  - name: Censys
+    ttl: 10080
+    creds:
+      account: 
+        apikey: ba1575a7-cbea-4a37-9458-9a17e0fecd64
+        secret: 4kkX33jerKDZy61H6dkcHKTmsr41COBL
+  - name: Chaos
+    ttl: 4320
+    creds:
+      account: 
+        apikey: null
+  - name: CIRCL
+    creds:
+      account: 
+        username: null
+        password: null
+  - name: CertCentral
+    creds:
+      account: 
+        username: exodustest1
+        apikey: B4FIQQTXQUNYLAA7UUGCL7FASIMWY4HRBH5FOP7DTICJ62ZX2MRRDSE62EKDFIRRDIWJ2FO4KBFNP5D7D
+  - name: DNSDB
+    ttl: 4320
+    creds:
+      account: 
+        apikey: null
+  - name: DNSlytics
+    creds:
+      account: 
+        apikey: null
+  - name: DNSRepo
+    creds:
+      account: 
+        apikey: null
+  - name: Deepinfo
+    creds:
+      account: 
+        apikey: null
+  - name: Detectify
+    creds:
+      account: 
+        apikey: null
+  - name: FacebookCT
+    ttl: 4320
+    creds:
+      app1: 
+        apikey: null
+        secret: null
+      app2: 
+        apikey: null
+        secret: null
+  - name: FOFA
+    ttl: 10080
+    creds:
+      account: 
+        username: null
+        apikey: null
+  - name: FullHunt
+    creds:
+      account: 
+        apikey: 899a37ae-7087-40a5-a8d8-c7ddf02d0cb9
+  - name: GitHub
+    ttl: 4320
+    creds:
+      accountname: 
+        apikey: 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
+  - name: GitLab
+    ttl: 4320
+    creds:
+      accountname: 
+        apikey: glpat-thxns6tFLT2P1PEZxxZB
+  - name: HackerTarget
+    ttl: 1440
+    creds:
+      account: 
+        apikey: null
+  - name: Hunter
+    creds:
+      account: 
+        apikey: 67bfa849fb69a22430c5f3ff1bf12b953f26dfd6
+  - name: IntelX
+    creds:
+      account: 
+        apikey: 89c20570-51a9-4eb8-8b98-84478488faf8
+  - name: IPdata
+    creds:
+      account: 
+        apikey: 65dfff4c5bbc82076aa06ec487a0bbba1e2b51b907fa4e9be5ed0281
+  - name: IPinfo
+    creds:
+      account: 
+        apikey: ca6b61c75a1ea9
+  - name: LeakIX
+    creds:
+      account: 
+        apikey: GKPsnCwBD1sQwo8JPzuS_taShalimxJ4JIX8n9eRWlPSDQtz
+  - name: Netlas
+    creds:
+      account: 
+        apikey: null
+  - name: ONYPHE
+    ttl: 4320
+    creds:
+      account: 
+        apikey: null
+  - name: Pastebin
+    ttl: 10080
+    creds:
+      account: 
+        apikey: re76qoMnmxplCis81ItY25JQZFO3pvRq
+  - name: PassiveTotal
+    ttl: 10080
+    creds:
+      account: 
+        username: autry.51@jriversm.com
+        apikey: 3b95fc5b3c4de663a80d32c294cddd25494c92d20959d39a4a3d41db2f61268e
+  - name: PentestTools
+    ttl: 10080
+    creds:
+      account: 
+        apikey: null
+  - name: PublicWWW
+    ttl: 10080
+    creds:
+      account: 
+        apikey: ae5faae19ae3b45a9f7bb746b9a56a49
+  - name: Quake
+    ttl: 4320
+    creds:
+      account: 
+        apikey: null
+  - name: SOCRadar
+    creds:
+      account: 
+        apikey: null
+  - name: SecurityTrails
+    ttl: 1440
+    creds:
+      account: 
+        apikey: 0ArTfyyCJ4GzPo14vE8mW3LVs7HUcPfg
+  - name: Shodan
+    ttl: 10080
+    creds:
+      account: 
+        apikey: aGplIL53fsxry9ljOOMAJOr6U7MLabVP
+  - name: Spamhaus
+    ttl: 1440
+    creds:
+      account: 
+        username: null
+        password: null
+  - name: ThreatBook
+    creds:
+      account1: 
+        apikey: null
+  - name: URLScan
+    creds:
+      account: 
+        apikey: 97c57c15-7100-454e-a3ca-15372b83c49c
+  - name: VirusTotal
+    ttl: 10080
+    creds:
+      account: 
+        apikey: 56e6eba7945c79976be558e1ffb828453e3f44c0b42dfb6b372663637d335280
+  - name: WhoisXMLAPI
+    creds:
+      account: 
+        apikey: at_yteU5JBhCaNfqNQA16D225hxzzO3p
+  - name: Yandex
+    ttl: 1440
+    creds:
+      account: 
+        username: null
+        apikey: null
+  - name: ZETAlytics
+    ttl: 1440
+    creds:
+      account: 
+        apikey: null
+  - name: ZoomEye
+    ttl: 1440
+    creds:
+      account: 
+        username: dove73560@gmail.com
+        password: @R@msys20                     
+
+# this is the global options that will be considered. For example, minimum_ttl would be a global option used to compare
+# the minimum_ttl to the other datasources ttl.
+global_options: 
+  minimum_ttl: 1440
