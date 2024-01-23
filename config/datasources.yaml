@@ -231,7 +231,7 @@ datasources:
     creds:
       account: 
         username: dove73560@gmail.com
-        password: @R@msys20                     
+        password: '@R@msys20'                     
 
 # this is the global options that will be considered. For example, minimum_ttl would be a global option used to compare
 # the minimum_ttl to the other datasources ttl.
