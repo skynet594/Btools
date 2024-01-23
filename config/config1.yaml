@@ -19,7 +19,7 @@ scope:
     # - example.example1.com
 options:
   resolvers: 
-    # - "../examples/resolvers.txt" # array of 1 path or multiple IPs to use as a resolver
+    - "../resolvers/resolvers.txt" # array of 1 path or multiple IPs to use as a resolver
     # - 76.76.19.19
   datasources: "./datasources.yaml" # the file path that will point to the data source configuration
   wordlist: # global wordlist(s) to uses 
