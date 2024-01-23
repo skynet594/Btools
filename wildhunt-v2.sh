@@ -27,11 +27,11 @@ passive() {
 	config_path="$Btools_path/config"
 	if [ -e "$Btools_path" ];then
 		rm -rf $Btools_path
-		git clone git@github.com:SpeedyQweku/Btools.git
+		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		mv $config_path .
 		rm -rf $Btools_path
 	else
-		git clone git@github.com:SpeedyQweku/Btools.git
+		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		mv $config_path .
 		rm -rf $Btools_path
 	fi
@@ -120,8 +120,7 @@ passive() {
 	printf "\n"
 
 	printf "SHOSUBGO SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	shosubgo -d "$domain" -s oBrxB7VlTtqCKznyDAxTjcB3I7Lu7EvA >> allresults/shosubgo.txt
-	cat allresults/shosubgo.txt
+	shosubgo -d "$domain" -s oBrxB7VlTtqCKznyDAxTjcB3I7Lu7EvA >> allresults/shosubgo.txt && cat allresults/shosubgo.txt
 	printf "\n"
 
 	printf "GAU SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -166,7 +165,7 @@ passive() {
 	cat crt.txt rapiddns.txt subfinder.txt assetfinder.txt findomain.txt githubsubs.txt gitlabsubs.txt shosubgo.txt ourl.txt gau.txt waybackurls.txt tlsx.txt amass.txt ../bbot-results/$domain/subdomains.txt | sort -u > uniqued.txt
 
     ## Checking for live domain
-	printf "CHECKING %s FOR LIVE DOMAINS\n=====================================\n", "$domain"
+	printf "CHECKING %s FOR LIVE DOMAINS\n=====================================\n"
 	cat uniqued.txt | $HOME/go/bin/httpx -t 70 -o AllLiveDomains.txt
     sendtele "... Httpx scan is done on $domain,{nl}Go start your subdomain-takeover and secret scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish."
 	printf "\n"
@@ -177,7 +176,7 @@ passive() {
 
     ##Using rustscan to scan all ports
 	printf "==>SCRIPT 3 RUNNING FULL PORT SCAN THIS MIGHT TAKE LONGER\n=====================================\n"
-	rustscan -a uniqued.txt --range 1-65535 --scan-order "Random" > /portscan/allOpenports.txt
+	rustscan -a uniqued.txt --range 1-65535 --scan-order "Random" > ../portscan/allOpenports.txt
 	cd "$dir2" && cd ..
 	printf "\n"
 }
