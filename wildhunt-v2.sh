@@ -27,11 +27,11 @@ passive() {
 	config_path="$Btools_path/config"
 	if [ -e "$Btools_path" ];then
 		rm -rf $Btools_path
-		git clone https://github.com/SpeedyQweku/Btools.git
+		git clone git@github.com:SpeedyQweku/Btools.git
 		mv $config_path .
 		rm -rf $Btools_path
 	else
-		git clone https://github.com/SpeedyQweku/Btools.git
+		git clone git@github.com:SpeedyQweku/Btools.git
 		mv $config_path .
 		rm -rf $Btools_path
 	fi
