@@ -167,7 +167,6 @@ passive() {
 	printf "\n"
 }
 
-
 ##active subdomain enumeration begins here using amass
 active(){
 	resolver_path="$HOME/recon/resolvers/resolvers.txt"
@@ -190,8 +189,8 @@ pass(){
 
     ## Script 2 is run here on all collected subdomains to get more subdomains. This is done before live domains are check.
 	printf "==>SCRIPT 2 STARTS RUNING ONLY AMASS ON ALL SUBDOMAINS FOR MORE DOMAINS\n=====================================\n"
-	amass enum -passive -norecursive  -df uniqued.txt
-	psql postgres://admin:password@localhost:5432/amass -c "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" | grep ".\\$domain$" >> allresults/rerunall.txt
+	amass enum -passive -norecursive -df uniqued.txt --dir "$domain-subsrerun"
+	sqlite3 "$domain-subsrerun"/amass.sqlite "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" > rerunall.txt
 
 	## All subdomains obtained are combined.
 	printf "==>COMBING ALL RESULTS FROM SCRIPT 1 AND 2 | CHECKING LIVE | UNIQUE\n=====================================\n"
