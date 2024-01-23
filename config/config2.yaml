@@ -30,8 +30,8 @@ options:
   bruteforce: # specific option to use when brute forcing is needed
     enabled: true
     wordlists: # wordlist(s) to use that are specific to brute forcing
-      # - "./wordlists/subdomains-top1mil-5000.txt"
+      - "./wordlists/best-dns-wordlist.txt.txt"
   alterations: # specific option to use when brute forcing is needed
     enabled: true
     wordlists: # wordlist(s) to use that are specific to alterations
-      # - "./wordlists/subdomains-top1mil-110000.txt"
+      - "./wordlists/best-dns-wordlist.txt.txt"

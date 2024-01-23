@@ -28,10 +28,10 @@ options:
   database: 
     # - "postgres://username:password@localhost:5432/database?testing=works" # databases URI to be used when adding entries
   bruteforce: # specific option to use when brute forcing is needed
-    enabled: true
+    enabled: false
     wordlists: # wordlist(s) to use that are specific to brute forcing
       # - "./wordlists/subdomains-top1mil-5000.txt"
   alterations: # specific option to use when brute forcing is needed
-    enabled: true
+    enabled: false
     wordlists: # wordlist(s) to use that are specific to alterations
       # - "./wordlists/subdomains-top1mil-110000.txt"
