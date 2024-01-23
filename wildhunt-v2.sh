@@ -154,57 +154,39 @@ passive() {
 	printf "AMASS SEARCHING FOR SUBDOMAINS IT MIGHT TAKE LONG-PASSIVE\n=====================================\n"
 	amass enum -passive -norecursive -config ../config/config1.yaml -d "$domain" 
 	psql postgres://admin:password@localhost:5432/amass -c "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" | grep ".\\$domain$" >> allresults/amass.txt
-	rm -f "$resolver_path"
 	printf "\n"
 
 	printf "==> ACTIVE RECON - AMASS BRUTEFORCING\n=====================================\n"
 	active "$domain"
 	printf "\n"
 
-	printf "==> ACTIVE-PASS\n=====================================\n"
-	pass "$domain"
+	## All subdomains obtained are combined.
+	printf "==>COMBING ALL RESULTS FROM SCRIPT 1 \n=====================================\n"
+    cd allresults/ || exit
+	cat crt.txt rapiddns.txt subfinder.txt assetfinder.txt findomain.txt githubsubs.txt gitlabsubs.txt shosubgo.txt ourl.txt gau.txt waybackurls.txt tlsx.txt amass.txt ../bbot-results/$domain/subdomains.txt | sort -u > uniqued.txt
+
+    ## Checking for live domain
+	printf "CHECKING %s FOR LIVE DOMAINS\n=====================================\n", "$domain"
+	cat uniqued.txt | $HOME/go/bin/httpx -t 70 -o AllLiveDomains.txt
+    sendtele "... Httpx scan is done on $domain,{nl}Go start your subdomain-takeover and secret scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish."
+	printf "\n"
+
+	printf "==> Removing https and http from subs to use in cero\n=====================================\n"
+	cat AllLiveDomains.txt | grep -oP '(?<=://)[^/]+(?=/|$)' > noprotocolDomains.txt
+	printf "\n"
+
+    ##Using rustscan to scan all ports
+	printf "==>SCRIPT 3 RUNNING FULL PORT SCAN THIS MIGHT TAKE LONGER\n=====================================\n"
+	rustscan -a uniqued.txt --range 1-65535 --scan-order "Random" > /portscan/allOpenports.txt
 	cd "$dir2" && cd ..
 	printf "\n"
 }
 
 ##active subdomain enumeration begins here using amass
 active(){
-	resolver_path="$HOME/recon/resolvers/resolvers.txt"
-	if [ -e "$resolver_path" ];then
-		echo "File exists."
-	else
-		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$HOME/recon/resolvers/"
-	fi
-
-	amass enum -brute -alts	 -config ../config/config2.yaml -d $domain
+	amass enum -brute -alts	-config ../config/config2.yaml -d $domain
 	psql postgres://admin:password@localhost:5432/amass -c "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" | grep ".\\$domain$" >> allresults/amass.txt
 	rm -f "$resolver_path"
-}
-
-pass(){
-    ## All subdomains obtained are combined.
-	printf "==>COMBING ALL RESULTS FROM SCRIPT 1 \n=====================================\n"
-    cd allresults/ || exit
-	cat crt.txt rapiddns.txt subfinder.txt assetfinder.txt findomain.txt githubsubs.txt gitlabsubs.txt shosubgo.txt ourl.txt gau.txt waybackurls.txt tlsx.txt amass.txt ../bbot-results/$domain/subdomains.txt | sort -u > uniqued.txt
-
-    ## Script 2 is run here on all collected subdomains to get more subdomains. This is done before live domains are check.
-	printf "==>SCRIPT 2 STARTS RUNING ONLY AMASS ON ALL SUBDOMAINS FOR MORE DOMAINS\n=====================================\n"
-	amass enum -passive -norecursive -df uniqued.txt --dir "$domain-subsrerun"
-	sqlite3 "$domain-subsrerun"/amass.sqlite "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" > rerunall.txt
-
-	## All subdomains obtained are combined.
-	printf "==>COMBING ALL RESULTS FROM SCRIPT 1 AND 2 | CHECKING LIVE | UNIQUE\n=====================================\n"
-	cat crt.txt rapiddns.txt subfinder.txt assetfinder.txt findomain.txt githubsubs.txt gitlabsubs.txt shosubgo.txt ourl.txt gau.txt waybackurls.txt tlsx.txt amass.txt ../bbot-results/$domain/subdomains.txt rerunall.txt | sort -u > alluniqued.txt
-
-    ## Checking for live domain
-	printf "CHECKING %s FOR LIVE DOMAINS\n=====================================\n", "$domain"
-	cat alluniqued.txt | $HOME/go/bin/httpx -t 70 -o AllLiveDomains.txt
-    sendtele "... Httpx scan is done on $domain,{nl}Go start your subdomain-takeover and secret scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish."
-	printf "\n"
-
-    ##Using rustscan to scan all ports
-	printf "==>SCRIPT 3 RUNNING FULL PORT SCAN THIS MIGHT TAKE LONGER\n=====================================\n"
-	rustscan -a alluniqued.txt --range 1-65535 --scan-order "Random" > /portscan/allOpenports.txt
 }
 
 sendtele "$1"
