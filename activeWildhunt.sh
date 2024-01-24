@@ -50,6 +50,7 @@ active() {
 	else
 		mkdir "$DirF"
 	fi
+	sendtele "Doing recon on $domain now" a
 
 	printf "[-] ACTIVE RECON - AMASS BRUTEFORCING\n=====================================\n"
 	amass enum -brute -alts -config ../config/config2.yaml -d $domain
@@ -63,7 +64,7 @@ liveChecker() {
 	## Checking for live domain
 	printf "[|] CHECKING %s FOR LIVE DOMAINS\n=====================================\n"
 	cat ActiveResult.txt | $HOME/go/bin/httpx -t 70 -o AllLiveDomains.txt
-	sendtele '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.'
+	sendtele '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.' a
 	printf "\n"
 
 	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS to use in cero \n==================================================================\n"
@@ -81,4 +82,4 @@ for domains in $(cat $1); do
 done
 cat passiveResult.txt | anew $DirF/active-amass.txt | tee -a $DirF/ActiveResult.txt
 liveChecker
-sendtele "Active Subdomain Enumeration Done, Enjoy!!!"
+sendtele "Active Subdomain Enumeration Done, Enjoy!!!" a
