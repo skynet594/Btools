@@ -64,7 +64,7 @@ liveChecker() {
 	## Checking for live domain
 	printf "[|] CHECKING %s FOR LIVE DOMAINS\n=====================================\n"
 	cat ActiveResult.txt | $HOME/go/bin/httpx -t 70 -o AllLiveDomains.txt
-	sendtele '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.' a
+	sendtele '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results\[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.' a
 	printf "\n"
 
 	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS to use in cero \n==================================================================\n"
