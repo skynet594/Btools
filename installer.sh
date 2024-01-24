@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 go="go1.21.5.linux-amd64.tar.gz"
 
 sudo apt update && sudo apt upgrade -y
@@ -89,6 +88,9 @@ go install github.com/haccer/subjack@latest
 printf '[>] trufflehog'
 curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
 
+printf '[>] ffuf'
+go install github.com/ffuf/ffuf/v2@latest
+
 printf '[>] meg'
 go install github.com/tomnomnom/meg@master
 
@@ -123,14 +125,13 @@ sudo apt-get update
 sudo apt-get -y install postgresql
 
 cd
-echo 'export PATH=$PATH:$HOME/go/bin' >> .bashrc
+echo 'export PATH=$PATH:$HOME/go/bin' >>.bashrc
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-source .bashrc 
+source .bashrc
 
 printf 'All your tools are installed,Enjoy hacking Sir!!!\n'
-
 
 # printf '[>] Unimap\n'
 # git clone https://github.com/Edu4rdSHL/unimap.git && cd unimap
