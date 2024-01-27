@@ -23,11 +23,23 @@ source .bashrc
 printf 'Installing the following Tools\n'
 
 printf '[>] My Personal Tools\n'
-go install github.com/SpeedyQweku/dnsdump@latest
-go install github.com/SpeedyQweku/sfuzz@latest
-go install github.com/SpeedyQweku/sendTele@latest
-go install github.com/SpeedyQweku/RealTime@latest
-go install github.com/SpeedyQweku/dfuzz@latest
+
+packages=(
+    "github.com/SpeedyQweku/dnsdump@latest"
+    "github.com/SpeedyQweku/sfuzz@latest"
+    "github.com/SpeedyQweku/sendTele@latest"
+    "github.com/SpeedyQweku/RealTime@latest"
+    "github.com/SpeedyQweku/dfuzz@latest"
+)
+
+for package in "${packages[@]}"; do
+    if go install "$package"; then
+        echo "Package $package installed successfully"
+    else
+        echo "Error installing package $package"
+        exit 1
+    fi
+done
 
 printf '[>] Amass\n'
 go install -v github.com/owasp-amass/amass/v4/...@master
