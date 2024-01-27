@@ -1,7 +1,10 @@
 #!/bin/bash
 
-CHATID=""
-TOKEN=""
+echo -n "Enter your Telegram Chat ID: "
+read CHATID
+echo -n "Enter your Telegram Bot Token: "
+read TOKEN
+
 
 active() {
 	path=$(pwd)
