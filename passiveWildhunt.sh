@@ -155,7 +155,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] AMASS SEARCHING FOR SUBDOMAINS IT MIGHT TAKE LONG-PASSIVE\n=====================================\n"
-	amass enum -passive -norecursive -config ../config/config1.yaml -d "$domain"
+	amass enum -passive -norecursive -config ../config/passive.yaml -d "$domain"
 	psql postgres://admin:password@localhost:5432/amass -c "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" | grep ".\\$domain$" >>allresults/amass.txt
 	printf "\n"
 
