@@ -22,6 +22,13 @@ source .bashrc
 
 printf 'Installing the following Tools\n'
 
+printf '[>] My Personal Tools\n'
+go install github.com/SpeedyQweku/dnsdump@latest
+go install github.com/SpeedyQweku/sfuzz@latest
+go install github.com/SpeedyQweku/sendTele@latest
+go install github.com/SpeedyQweku/RealTime@latest
+go install github.com/SpeedyQweku/dfuzz@latest
+
 printf '[>] Amass\n'
 go install -v github.com/owasp-amass/amass/v4/...@master
 
