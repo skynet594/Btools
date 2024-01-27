@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+CHATID=""
+TOKEN=""
+
 ##passive enumeration started here
 crt() {
 	curl -s "https://crt.sh/?q=%25.$1" |
@@ -91,7 +95,7 @@ passive() {
 	done
 
 	##all domains run and an alert is sent to telegram for each domain processed
-	sendtele "Doing recon on $domain now" p
+	sendTele -c "$CHATID" -t "$TOKEN" -m "Doing recon on $domain now"
 
 	printf "\n"
 	printf "[-] SUBFINDER SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -171,19 +175,21 @@ liveChecker() {
 	## Checking for live domain
 	printf "[|] CHECKING %s FOR LIVE DOMAINS\n=====================================\n"
 	cat $DirR/passiveResult.txt | $HOME/go/bin/httpx -t 70 -o $DirR/AllLiveDomains.txt
-	sendtele '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results\[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.' p
+	sendTele -c "$CHATID" -t "$TOKEN" -m '... Httpx scan is done,{nl}Go start your subdomain-takeover and secret finder scan on the results\[AllLiveDomains.txt].{nl}While you wait for the port scan to finish.'
 	printf "\n"
 
 	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS to use in cero \n==================================================================\n"
-	cat $DirR/AllLiveDomains.txt | grep -oP '(?<=://)[^/]+(?=/|$)' | tee $DirR/noprotocolDomains.txt
+	cat $DirR/AllLiveDomains.txt | grep -oP '(?<=://)[^/]+(?=/|$)' | tee -a $DirR/noprotocolDomains.txt
 	printf "\n"
 
 	##Using rustscan to scan all ports
+	exclude_port="80,443,25,465,587,22,2525,21"
 	printf "[|] RUNNING A FULL PORT SCAN THIS MIGHT TAKE LONGER\n====================================================================\n"
-	rustscan -a $DirR/passiveResult.txt --range 1-65535 --scan-order "Random" --accessible | tee -a $DirR/allOpenports.txt
+	naabu -silent -nc -list $DirR/passiveResult.txt -p - -exclude-ports $exclude_port | tee -a $DirR/allOpenports.txt
+	# rustscan -a $DirR/passiveResult.txt --range 1-65535 --scan-order "Random" --accessible | tee -a $DirR/allOpenports.txt
 }
 
-sendtele "$1" p
+sendTele -c "$CHATID" -t "$TOKEN" -f "$1" -p
 for domains in $(cat $1); do
 	passive "$domains"
 done
@@ -195,9 +201,9 @@ for subfolder in "$folder_path"/*/; do
 	# Check if the sub.txt file exists in the current subfolder
 	if [ -e "$subfolder/allresults/uniqued.txt" ]; then
 		# If the file exists, use cat to output its contents
-		cat "$subfolder/allresults/uniqued.txt" >>$folder_path/$DirR/passiveResult.txt
+		cat "$subfolder/allresults/uniqued.txt" >> $folder_path/$DirR/passiveResult.txt
 	fi
 done
 
 cd $folder_path && liveChecker
-sendtele "Passive Subdomain Enumeration Done, Enjoy!!!" p
+sendtele -c "$CHATID" -t "$TOKEN" -m "Passive Subdomain Enumeration Done, Enjoy!!!"
