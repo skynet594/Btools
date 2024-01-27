@@ -56,7 +56,7 @@ active() {
 	sendTele -c "$CHATID" -t "$TOKEN" -m "Doing recon on $domain now"
 
 	printf "[-] ACTIVE RECON - AMASS BRUTEFORCING\n=====================================\n"
-	amass enum -brute -alts -config ../config/config2.yaml -d $domain
+	amass enum -brute -alts -config ../config/active.yaml -d $domain
 	psql postgres://admin:password@localhost:5432/amass -c "SELECT content->>'name' FROM assets WHERE type = 'FQDN' AND content->>'name' LIKE '%$domain'" | grep ".\\$domain$" >>$DirF/active-amass.txt
 	printf "\n"
 }
