@@ -69,7 +69,7 @@ active() {
 	else
 		mkdir "$DirF"
 	fi
-	sendTele -c "$CHATID" -t "$TOKEN" -m "Doing recon on $domain now"
+	sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Doing recon on $domain now"
 
 	printf "[-] ACTIVE RECON - AMASS BRUTEFORCING\n=====================================\n"
 	amass enum -brute -alts -config ../config/active.yaml -d $domain
@@ -143,11 +143,11 @@ done
 cat "$2" | anew $DirF/active-amass.txt | tee -a $DirF/ActiveResult.txt
 
 if [ $(wc -l "$DirF/ActiveResult.txt" | awk '{print $1}') -eq 0 ]; then
-	sendTele -c "$CHATID" -t "$TOKEN" -m "Active Subdomain Enumeration Done,{nl}[ActiveResult.txt] : 0"
+	sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Active Subdomain Enumeration Done,{nl}[ActiveResult.txt] : 0"
 	exit
 else
 	if CheckerScan && portscan; then
-		sendTele -c "$CHATID" -t "$TOKEN" -m "Active Subdomain Enumeration Done, Enjoy!!!"
+		sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Active Subdomain Enumeration Done, Enjoy!!!"
 	else
 		echo "Error: CheckerScan or portscan failed."
 	fi

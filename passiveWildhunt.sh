@@ -110,7 +110,7 @@ passive() {
 	done
 
 	##all domains run and an alert is sent to telegram for each domain processed
-	sendTele -c "$CHATID" -t "$TOKEN" -m "Doing recon on $domain now"
+	sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Doing recon on $domain now"
 
 	printf "\n"
 	printf "[-] SUBFINDER SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -259,4 +259,4 @@ for subfolder in "$folder_path"/*/; do
 done
 
 cd $folder_path && CheckerScan && portscan
-sendtele -c "$CHATID" -t "$TOKEN" -m "Passive Subdomain Enumeration Done, Enjoy!!!"
+sendtele -c "$CHATID" -t "$TOKEN" -m "{nl}Passive Subdomain Enumeration Done, Enjoy!!!"
