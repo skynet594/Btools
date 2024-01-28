@@ -25,11 +25,11 @@ printf 'Installing the following Tools\n'
 printf '[>] My Personal Tools\n'
 
 packages=(
-    "github.com/SpeedyQweku/dnsdump@latest"
-    "github.com/SpeedyQweku/sfuzz@latest"
-    "github.com/SpeedyQweku/sendTele@latest"
-    "github.com/SpeedyQweku/RealTime@latest"
-    "github.com/SpeedyQweku/dfuzz@latest"
+    "github.com/SpeedyQweku/dnsdump@master"
+    "github.com/SpeedyQweku/sfuzz@main"
+    "github.com/SpeedyQweku/sendTele@master"
+    "github.com/SpeedyQweku/RealTime@main"
+    "github.com/SpeedyQweku/dfuzz@main"
 )
 
 for package in "${packages[@]}"; do
@@ -44,8 +44,17 @@ done
 printf '[>] Amass\n'
 go install -v github.com/owasp-amass/amass/v4/...@master
 
+printf '[>] Smap\n'
+go install -v github.com/s0md3v/smap/cmd/smap@latest
+
 printf '[>] Subfinder\n'
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+
+printf '[>] Nuclei\n'
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+
+printf '[>] Dnstake\n'
+go install github.com/pwnesia/dnstake/cmd/dnstake@latest
 
 printf '[>] Assetfinder\n'
 go install github.com/tomnomnom/assetfinder@latest
