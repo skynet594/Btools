@@ -25,11 +25,11 @@ printf 'Installing the following Tools\n'
 printf '[>] My Personal Tools\n'
 
 packages=(
-    "github.com/SpeedyQweku/dnsdump@master"
-    "github.com/SpeedyQweku/sfuzz@main"
-    "github.com/SpeedyQweku/sendTele@master"
-    "github.com/SpeedyQweku/RealTime@main"
-    "github.com/SpeedyQweku/dfuzz@main"
+    "github.com/SpeedyQweku/dnsdump@latest"
+    "github.com/SpeedyQweku/sfuzz@latest"
+    "github.com/SpeedyQweku/sendTele@latest"
+    "github.com/SpeedyQweku/RealTime@latest"
+    "github.com/SpeedyQweku/dfuzz@latest"
 )
 
 for package in "${packages[@]}"; do
