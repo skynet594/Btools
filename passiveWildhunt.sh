@@ -33,16 +33,27 @@ passive() {
 
 	Btools_path="$dir2/Btools"
 	config_path="$Btools_path/config"
+	bbot_path="$Btools_path/bbot"
+	bbot_config="~/.config/bbot"
+
 	if [ -e "$Btools_path" ]; then
 		rm -rf $Btools_path
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
 		mv $config_path .
-		rm -rf $Btools_path
 	else
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
 		mv $config_path .
+	fi
+	
+	## Moving bbot to .config
+	if [[ -d "$bbot_config" ]]; then
+		rm -rf "$bbot_config"
+		mv "$bbot_path" ~/.config/
+		rm -rf $Btools_path
+	else
+		mv "$bbot_path" ~/.config/
 		rm -rf $Btools_path
 	fi
 
@@ -266,7 +277,7 @@ folder_path="$path/recon"
 
 for subfolder in "$folder_path"/*/; do
 	if [ -e "$subfolder/allresults/uniqued.txt" ]; then
-		cat "$subfolder/allresults/uniqued.txt" >> $folder_path/$DirR/passiveResult.txt
+		cat "$subfolder/allresults/uniqued.txt" >>$folder_path/$DirR/passiveResult.txt
 	fi
 done
 
