@@ -1,9 +1,13 @@
 #!/bin/bash
 
-echo -n "Enter your Telegram Chat ID: "
+echo -n "[-] Enter your Telegram Chat ID: "
 read CHATID
-echo -n "Enter your Telegram Bot Token: "
+echo -n "[-] Enter your Telegram Bot Token: "
 read TOKEN
+
+printf "[-] Added Some DNS Resolvers To Your System\n=====================================\n"
+printf "nameserver 8.8.8.8\nnameserver 76.76.2.0\nnameserver 9.9.9.9\nnameserver 208.67.222.222\nnameserver 1.1.1.1\nnameserver 185.228.168.9\nnameserver 76.76.19.19\nnameserver 94.140.14.14\n" | sudo tee -a /etc/resolv.conf
+printf "\n"
 
 ##passive enumeration started here
 crt() {
@@ -53,15 +57,15 @@ passive() {
 	if test -d "$DirRe"; then
 		rm -rf "$DirRe"
 	fi
-	mkdir "$Dir"
+	mkdir "$DirRe"
 
-	DirW=Wordlists
+	DirW=wordlists
 	if test -d "$DirW"; then
 		rm -rf "$DirW"
 	fi
 	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW"
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
 
 	DirT=nuclei-templates
 	if test -d "$DirT"; then
@@ -194,22 +198,27 @@ CheckerScan() {
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
 	sfuzz -l $DirR/AllLiveDomains.txt -c 30 -w $DirW/swaggerwordlist.txt -o $DirR/ValidSwagger.txt
+	printf "\n"
 
-	##scans for secrets file on webserver ports
+	# ##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
 	dfuzz -l $DirR/AllLiveDomains.txt -c 30 -w $DirW/secretlist.txt -o $DirR/ValidSecrets.txt
+	printf "\n"
 
 	##Scanning for dns take over.
 	printf "[|] SCANNING FOR  DNSTAKEOVER\n====================================================================\n"
 	dnstake -t $DirR/passiveResult.txt -c 50 -o $DirR/dnstakeover.out
+	printf "\n"
 
 	##Scanning for subdomain takeover.
 	printf "[|] SCANNING FOR SUBDOMAIN DNSTAKEOVER\n====================================================================\n"
 	nuclei -l $DirR/passiveResult.txt -t $DirT/detect-all-takeovers.yaml -o $DirR/subtakeover.txt
+	printf "\n"
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
 	dfuzz -l $DirR/AllLiveDomains.txt -c 30 -w $DirW/admin.txt -o $DirR/adminpanel.txt
+	printf "\n"
 
 	##Removes http/https
 	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS to use in cero \n==================================================================\n"
@@ -217,8 +226,9 @@ CheckerScan() {
 	printf "\n"
 
 	##Using smap for port scan
-	printf "[|] RUNNING A FULL PORT SCAN THIS MIGHT TAKE LONGER\n====================================================================\n"
+	printf "[|] RUNNING SMAP\n====================================================================\n"
 	smap -iL $DirR/passiveResult.txt -oX $DirR/output.xml
+	printf "\n"
 }
 
 portscan() {
@@ -226,20 +236,24 @@ portscan() {
 	exclude_port="80,443,25,465,587,22,2525,21"
 	printf "[|] RUNNING A FULL PORT SCAN THIS MIGHT TAKE LONGER\n====================================================================\n"
 	naabu -silent -nc -list $DirR/passiveResult.txt -p - -exclude-ports $exclude_port | tee -a $DirR/allOpenports.txt
+	printf "\n"
 	# rustscan -a $DirR/passiveResult.txt --range 1-65535 --scan-order "Random" --accessible | tee -a $DirR/allOpenports.txt
 
 	##To check for live webservers
 	printf "[|] CHECKING FOR LIVE WEBSERVERS ON OPEN PORTS\n====================================================================\n"
 	cat allOpenports.txt | $HOME/go/bin/httpx -t 70 -o $DirR/LiveWebServers.txt
 	sendTele -c "$CHATID" -t "$TOKEN" -m '{nl}Httpx scan for [portscan] is done.{nl}Go start your URL gathering.{nl}Results name : [AllLiveDomains.txt].'
+	printf "\n"
 
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
 	sfuzz -l $DirR/LiveWebServers.txt -c 30 -w $DirW/swaggerwordlist.txt -o $DirR/ValidWebServerSwagger.txt
+	printf "\n"
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
 	dfuzz -l $DirR/LiveWebServers.txt -c 30 -w $DirW/secretlist.txt -o $DirR/ValidWebServerSecrets.txt
+	printf "\n"
 }
 
 sendTele -c "$CHATID" -t "$TOKEN" -f "$1" -p
@@ -252,7 +266,7 @@ folder_path="$path/recon"
 
 for subfolder in "$folder_path"/*/; do
 	if [ -e "$subfolder/allresults/uniqued.txt" ]; then
-		cat "$subfolder/allresults/uniqued.txt" >>$folder_path/$DirR/passiveResult.txt
+		cat "$subfolder/allresults/uniqued.txt" >> $folder_path/$DirR/passiveResult.txt
 	fi
 done
 

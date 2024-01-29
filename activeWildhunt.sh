@@ -35,20 +35,19 @@ active() {
 	mkdir "$Dir" && wget -q https://wordlists-cdn.assetnote.io/data/manual/best-dns-wordlist.txt -P "$Dir"
 
 	## Glolbal directories
-	Dir=resolvers
-	if test -d "$Dir"; then
-		printf "First directory created\n"
-		rm -rf "$Dir"
+	DirRe=resolvers
+	if test -d "$DirRe"; then
+		rm -rf "$DirRe"
 	fi
-	mkdir "$Dir"
+	mkdir "$DirRe"
 
-	DirW=Wordlists
+	DirW=wordlists
 	if test -d "$DirW"; then
 		rm -rf "$DirW"
 	fi
 	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW"
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
 
 	DirT=nuclei-templates
 	if test -d "$DirT"; then
@@ -56,11 +55,11 @@ active() {
 	fi
 	mkdir "$DirT" && wget -q https://raw.githubusercontent.com/projectdiscovery/nuclei-templates/8b2bc8ab8ef801d4342bb4ec4fedb5460296da29/subdomain-takeover/detect-all-takeovers.yaml -P "$DirT"
 
-	resolver_path="$dir2/resolvers/resolvers.txt"
+	resolver_path="$dir2/$DirRe/resolvers.txt"
 	if [ -e "$resolver_path" ]; then
 		echo "File exists."
 	else
-		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$dir2/resolvers/"
+		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$dir2/$DirRe"
 	fi
 
 	DirF=activeresults
