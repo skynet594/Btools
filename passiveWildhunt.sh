@@ -49,9 +49,9 @@ passive() {
 	mkdir "$Dir" && wget -q https://wordlists-cdn.assetnote.io/data/manual/best-dns-wordlist.txt -P "$Dir"
 
 	## Glolbal directories
-	Dir=resolvers
-	if test -d "$Dir"; then
-		rm -rf "$Dir"
+	DirRe=resolvers
+	if test -d "$DirRe"; then
+		rm -rf "$DirRe"
 	fi
 	mkdir "$Dir"
 
@@ -75,11 +75,11 @@ passive() {
 	fi
 	mkdir "$DirR"
 
-	resolver_path="$dir2/resolvers/resolvers.txt"
+	resolver_path="$dir2/$DirRe/resolvers.txt"
 	if [ -e "$resolver_path" ]; then
 		echo "File exists."
 	else
-		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$HOME/recon/resolvers/"
+		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$dir2/$DirRe"
 	fi
 
 	## directories created
@@ -118,7 +118,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] ASSETFINDER SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	assetfinder -subs-only "$domain" >>allresults/assetfinder.txt
+	assetfinder -subs-only "$domain" | tee -a allresults/assetfinder.txt
 	printf "\n"
 
 	printf "[-] FINDOMAIN SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -126,7 +126,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] ourl searching for subs\n=====================================\n"
-	ourl -subs -p -a "$domain" >>allresults/ourl.txt
+	ourl -subs -p -a "$domain" | tee -a allresults/ourl.txt
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITHUB\n=====================================\n"
@@ -134,11 +134,11 @@ passive() {
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITLAB\n=====================================\n"
-	gitlab-subdomains -d "$domain" -t glpat-AeWyCS55u2TNateyax4Q,glpat-baUgPcXWN-N_opxisyvJ >>allresults/gitlabsubs.txt
+	gitlab-subdomains -d "$domain" -t glpat-AeWyCS55u2TNateyax4Q,glpat-baUgPcXWN-N_opxisyvJ | tee -a allresults/gitlabsubs.txt
 	printf "\n"
 
 	printf "[-] SHOSUBGO SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	shosubgo -d "$domain" -s oBrxB7VlTtqCKznyDAxTjcB3I7Lu7EvA >>allresults/shosubgo.txt && cat allresults/shosubgo.txt
+	shosubgo -d "$domain" -s oBrxB7VlTtqCKznyDAxTjcB3I7Lu7EvA | tee -a allresults/shosubgo.txt
 	printf "\n"
 
 	printf "[-] GAU SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -147,13 +147,11 @@ passive() {
 	printf "\n"
 
 	printf "[-] CRT SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	crt "$domain" >allresults/crt.txt
-	cat allresults/crt.txt
+	crt "$domain" | tee -a allresults/crt.txt
 	printf "\n"
 
 	printf "[-] RAPIDDNS SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	rapiddns "$domain" >allresults/rapiddns.txt
-	cat allresults/rapiddns.txt
+	rapiddns "$domain" | tee -a allresults/rapiddns.txt
 	printf "\n"
 
 	printf "[-] WAYBACKMACHINE SEARCHING FOR SUBDOMAINS IT MAIGHT TAKE SOMETIME\n=====================================\n"
