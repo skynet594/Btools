@@ -50,7 +50,7 @@ passive() {
 	if test -d "$Dir"; then
 		rm -rf "$Dir"
 	fi
-	mkdir "$Dir" && wget -q https://wordlists-cdn.assetnote.io/data/manual/best-dns-wordlist.txt -P "$Dir"
+	mkdir "$Dir" && wget -q https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/subdomains-top1million-5000.txt -P "$Dir"
 
 	## Glolbal directories
 	DirRe=resolvers
