@@ -122,7 +122,7 @@ passive() {
 		exit 1
 	fi
 
-	gauPath="$config_path/.gau.toml"
+	gauPath="$dir2/config/.gau.toml"
 	dest_dir="$HOME"
 	if [ -e "$ourlPath" ]; then
 		if [ ! -e "$dest_dir/$(basename "$gauPath")" ]; then
@@ -372,4 +372,4 @@ for subfolder in "$folder_path"/*/; do
 done
 
 cd $folder_path && CheckerScan && portscan
-sendtele -c "$CHATID" -t "$TOKEN" -m "{nl}Passive Subdomain Enumeration Done, Enjoy!!!"
+sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Passive Subdomain Enumeration Done, Enjoy!!!"
