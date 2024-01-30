@@ -2,24 +2,24 @@
 
 # Check if the number of arguments is correct
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <target.txt>"
-    exit 1
+	echo "Usage: $0 <target.txt>"
+	exit 1
 fi
 
 echo -n "[-] Enter your Telegram Chat ID: "
 read CHATID
 
 if [ -z "$CHATID" ]; then
-    echo -e "\e[31m[Error] Please provide a Telegram Chat ID.\e[0m"
-    exit 1
+	echo -e "\e[31m[Error] Please provide a Telegram Chat ID.\e[0m"
+	exit 1
 fi
 
 echo -n "[-] Enter your Telegram Bot Token: "
 read TOKEN
 
 if [ -z "$TOKEN" ]; then
-    echo -e "\e[31m[Error] Please provide a Telegram Bot Token.\e[0m"
-    exit 1
+	echo -e "\e[31m[Error] Please provide a Telegram Bot Token.\e[0m"
+	exit 1
 fi
 
 echo -n "[-] Enter your GitHub SSH File Name: "
@@ -27,14 +27,14 @@ read sshfile
 
 # Check if the SSH file name is provided
 if [ -z "$sshfile" ]; then
-    echo -e "\e[31m[Error] Please provide a GitHub SSH file name.\e[0m"
-    exit 1
+	echo -e "\e[31m[Error] Please provide a GitHub SSH file name.\e[0m"
+	exit 1
 fi
 
 # Check if the SSH key file exists
 if [ ! -f "$HOME/.ssh/$sshfile" ]; then
-    echo -e "\e[31m[Error] SSH key file '$sshfile' not found in '$HOME/.ssh/'"
-    exit 1
+	echo -e "\e[31m[Error] SSH key file '$sshfile' not found in '$HOME/.ssh/'"
+	exit 1
 fi
 
 echo "[+] Starting SSH agent..."
@@ -48,10 +48,10 @@ printf "\n"
 
 # Check if adding the key was successful
 if [ $? -eq 0 ]; then
-    echo "[+] SSH key added successfully!"
+	echo "[+] SSH key added successfully!"
 	printf "\n"
 else
-    echo "[Error] Failed to add SSH key to agent."
+	echo "[Error] Failed to add SSH key to agent."
 fi
 
 # printf "nameserver 8.8.8.8\n" | sudo tee -a /etc/resolv.conf
@@ -105,7 +105,18 @@ passive() {
 		mv "$bbot_path" "$HOME/.config/"
 	else
 		mv "$bbot_path" "$HOME/.config/"
-		# rm -rf $Btools_path
+	fi
+
+	ourlPath="$Btools_path/ptool/ourl"
+	destination_directory="/usr/bin"
+	if [ -e "$file_to_move" ]; then
+		if [ ! -e "$destination_directory/$(basename "$file_to_move")" ]; then
+			mv "$file_to_move" "$destination_directory" && echo "[+] File moved successfully to '$destination_directory'."
+		else
+			echo "[Warning] File already exists in destination directory '$destination_directory'."
+		fi
+	else
+		echo "[Warning] File '$file_to_move' not found in source directory."
 	fi
 
 	Dir=config/wordlists
@@ -127,8 +138,14 @@ passive() {
 	fi
 
 	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || { echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"; exit 1; }
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || { echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"; exit 1; }
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || {
+		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"
+		exit 1
+	}
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || {
+		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"
+		exit 1
+	}
 
 	DirT=nuclei-templates
 	if test -d "$DirT"; then
@@ -151,7 +168,7 @@ passive() {
 
 	#Removing the Btools
 	rm -rf "$Btools_path"
-	
+
 	## directories created
 	local domain="$1"
 	IFS='.' read -ra data <<<"$domains"
@@ -184,7 +201,7 @@ passive() {
 
 	printf "\n"
 	printf "[-] SUBFINDER SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	subfinder -d "$domain" -o allresults/subfinder.txt
+	subfinder -d "$domain" -o allresults/subfinder.txt -pc ../config/provider-config.yaml
 	printf "\n"
 
 	printf "[-] ASSETFINDER SEARCHING FOR SUBDOMAINS\n=====================================\n"
@@ -321,7 +338,6 @@ portscan() {
 	dfuzz -l $DirR/LiveWebServers.txt -c 30 -w $DirW/secretlist.txt -o $DirR/ValidWebServerSecrets.txt
 	printf "\n"
 }
-
 
 sendTele -c "$CHATID" -t "$TOKEN" -f "$1" -p
 for domains in $(cat $1); do
