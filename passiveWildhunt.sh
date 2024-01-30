@@ -1,13 +1,62 @@
 #!/bin/bash
 
+# Check if the number of arguments is correct
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <target.txt>"
+    exit 1
+fi
+
 echo -n "[-] Enter your Telegram Chat ID: "
 read CHATID
+
+if [ -z "$CHATID" ]; then
+    echo -e "\e[31m[Error] Please provide a Telegram Chat ID.\e[0m"
+    exit 1
+fi
+
 echo -n "[-] Enter your Telegram Bot Token: "
 read TOKEN
 
+if [ -z "$TOKEN" ]; then
+    echo -e "\e[31m[Error] Please provide a Telegram Bot Token.\e[0m"
+    exit 1
+fi
+
+echo -n "[-] Enter your GitHub SSH File Name: "
+read sshfile
+
+# Check if the SSH file name is provided
+if [ -z "$sshfile" ]; then
+    echo -e "\e[31m[Error] Please provide a GitHub SSH file name.\e[0m"
+    exit 1
+fi
+
+# Check if the SSH key file exists
+if [ ! -f "$HOME/.ssh/$sshfile" ]; then
+    echo -e "\e[31m[Error] SSH key file '$sshfile' not found in '$HOME/.ssh/'"
+    exit 1
+fi
+
+echo "[+] Starting SSH agent..."
+eval "$(ssh-agent -s)"
+printf "\n"
+
+# Add the SSH key to the agent
+echo "[+] Adding SSH key to agent..."
+ssh-add "$HOME/.ssh/$sshfile"
+printf "\n"
+
+# Check if adding the key was successful
+if [ $? -eq 0 ]; then
+    echo "[+] SSH key added successfully!"
+	printf "\n"
+else
+    echo "[Error] Failed to add SSH key to agent."
+fi
+
 # printf "nameserver 8.8.8.8\n" | sudo tee -a /etc/resolv.conf
 if ! grep -q "nameserver 8.8.8.8" /etc/resolv.conf; then
-	printf "[-] Added Some DNS Resolvers To Your System\n=====================================\n"
+	printf "[+] Added Some DNS Resolvers To Your System\n=====================================\n"
 	printf "nameserver 8.8.8.8\nnameserver 76.76.2.0\nnameserver 9.9.9.9\nnameserver 208.67.222.222\nnameserver 1.1.1.1\nnameserver 185.228.168.9\nnameserver 76.76.19.19\nnameserver 94.140.14.14\n" | sudo tee -a /etc/resolv.conf
 	printf "\n"
 fi
@@ -36,28 +85,27 @@ passive() {
 
 	Btools_path="$dir2/Btools"
 	config_path="$Btools_path/config"
-	bbot_path="$Btools_path/bbot"
-	bbot_config="~/.config/bbot"
 
 	if [ -e "$Btools_path" ]; then
 		rm -rf $Btools_path
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
-		mv -rf $config_path .
+		mv $config_path .
 	else
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
-		mv -rf $config_path .
+		mv $config_path .
 	fi
 
 	## Moving bbot to .config
+	bbot_path="$Btools_path/bbot"
+	bbot_config="$HOME/.config/bbot"
 	if [[ -d "$bbot_config" ]]; then
 		rm -rf "$bbot_config"
-		mv -rf "$bbot_path" ~/.config/
-		rm -rf $Btools_path
+		mv "$bbot_path" "$HOME/.config/"
 	else
-		mv -rf "$bbot_path" ~/.config/
-		rm -rf $Btools_path
+		mv "$bbot_path" "$HOME/.config/"
+		# rm -rf $Btools_path
 	fi
 
 	Dir=config/wordlists
@@ -73,13 +121,14 @@ passive() {
 	fi
 	mkdir "$DirRe"
 
-	DirW=wordlists
+	DirW=Wordlists
 	if test -d "$DirW"; then
 		rm -rf "$DirW"
 	fi
+
 	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || echo -e "\e[31mRepo Is PVT,Make It PUB\e[0m" && exit
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || { echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"; exit 1; }
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || { echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"; exit 1; }
 
 	DirT=nuclei-templates
 	if test -d "$DirT"; then
@@ -100,6 +149,9 @@ passive() {
 		wget -q https://raw.githubusercontent.com/trickest/resolvers/main/resolvers.txt -P "$dir2/$DirRe"
 	fi
 
+	#Removing the Btools
+	rm -rf "$Btools_path"
+	
 	## directories created
 	local domain="$1"
 	IFS='.' read -ra data <<<"$domains"
@@ -269,6 +321,7 @@ portscan() {
 	dfuzz -l $DirR/LiveWebServers.txt -c 30 -w $DirW/secretlist.txt -o $DirR/ValidWebServerSecrets.txt
 	printf "\n"
 }
+
 
 sendTele -c "$CHATID" -t "$TOKEN" -f "$1" -p
 for domains in $(cat $1); do
