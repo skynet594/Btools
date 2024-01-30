@@ -3,7 +3,7 @@
 go="go1.21.5.linux-amd64.tar.gz"
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install wget unzip tmux python3 python3-dev python3-pip git nmap zsh libpcap-dev -y
+sudo apt install wget unzip tmux python3 python3-dev python3-pip git nmap zsh libpcap-dev jq-y
 
 wget https://go.dev/dl/$go
 sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf $go
