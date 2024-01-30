@@ -1,0 +1,5 @@
+{
+  "CHATID": "your_telegram_chat_id", 
+  "TOKEN": "your_telegram_bot_token",
+  "sshfile": "your_github_ssh_file_name"
+}

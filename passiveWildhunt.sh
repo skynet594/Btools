@@ -6,26 +6,26 @@ if [ "$#" -ne 1 ]; then
 	exit 1
 fi
 
-echo -n "[-] Enter your Telegram Chat ID: "
-read CHATID
+CONFIG_FILE="$HOME/.config.json"
 
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Error: Config file '$CONFIG_FILE' not found."
+    exit 1
+fi
+
+CHATID=$(jq -r '.CHATID' < "$CONFIG_FILE" | tr -d '[:space:]')
+TOKEN=$(jq -r '.TOKEN' < "$CONFIG_FILE" | tr -d '[:space:]')
+sshfile=$(jq -r '.sshfile' < "$CONFIG_FILE"| tr -d '[:space:]')
+
+# Check if the json value are provided
 if [ -z "$CHATID" ]; then
 	echo -e "\e[31m[Error] Please provide a Telegram Chat ID.\e[0m"
 	exit 1
 fi
-
-echo -n "[-] Enter your Telegram Bot Token: "
-read TOKEN
-
 if [ -z "$TOKEN" ]; then
 	echo -e "\e[31m[Error] Please provide a Telegram Bot Token.\e[0m"
 	exit 1
 fi
-
-echo -n "[-] Enter your GitHub SSH File Name: "
-read sshfile
-
-# Check if the SSH file name is provided
 if [ -z "$sshfile" ]; then
 	echo -e "\e[31m[Error] Please provide a GitHub SSH file name.\e[0m"
 	exit 1
@@ -307,7 +307,7 @@ CheckerScan() {
 	printf "\n"
 
 	##Removes http/https
-	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS to use in cero \n==================================================================\n"
+	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS\n==================================================================\n"
 	cat $DirR/AllLiveDomains.txt | grep -oP '(?<=://)[^/]+(?=/|$)' | tee -a $DirR/noprotocolDomains.txt
 	printf "\n"
 
