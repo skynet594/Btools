@@ -5,9 +5,12 @@ read CHATID
 echo -n "[-] Enter your Telegram Bot Token: "
 read TOKEN
 
-printf "[-] Added Some DNS Resolvers To Your System\n=====================================\n"
-printf "nameserver 8.8.8.8\nnameserver 76.76.2.0\nnameserver 9.9.9.9\nnameserver 208.67.222.222\nnameserver 1.1.1.1\nnameserver 185.228.168.9\nnameserver 76.76.19.19\nnameserver 94.140.14.14\n" | sudo tee -a /etc/resolv.conf
-printf "\n"
+# printf "nameserver 8.8.8.8\n" | sudo tee -a /etc/resolv.conf
+if ! grep -q "nameserver 8.8.8.8" /etc/resolv.conf; then
+	printf "[-] Added Some DNS Resolvers To Your System\n=====================================\n"
+	printf "nameserver 8.8.8.8\nnameserver 76.76.2.0\nnameserver 9.9.9.9\nnameserver 208.67.222.222\nnameserver 1.1.1.1\nnameserver 185.228.168.9\nnameserver 76.76.19.19\nnameserver 94.140.14.14\n" | sudo tee -a /etc/resolv.conf
+	printf "\n"
+fi
 
 ##passive enumeration started here
 crt() {
@@ -40,20 +43,20 @@ passive() {
 		rm -rf $Btools_path
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
-		mv $config_path .
+		mv -rf $config_path .
 	else
 		git clone git@github.com:SpeedyQweku/Btools.git || exit
 		rm -rf config
-		mv $config_path .
+		mv -rf $config_path .
 	fi
-	
+
 	## Moving bbot to .config
 	if [[ -d "$bbot_config" ]]; then
 		rm -rf "$bbot_config"
-		mv "$bbot_path" ~/.config/
+		mv -rf "$bbot_path" ~/.config/
 		rm -rf $Btools_path
 	else
-		mv "$bbot_path" ~/.config/
+		mv -rf "$bbot_path" ~/.config/
 		rm -rf $Btools_path
 	fi
 
