@@ -113,10 +113,13 @@ passive() {
 		if [ ! -e "$destination_directory/$(basename "$ourlPath")" ]; then
 			mv "$ourlPath" "$destination_directory" && echo "[+] File moved successfully to '$destination_directory'."
 		else
-			echo "[Warning] File already exists in destination directory '$destination_directory'."
+			printf "\n"
+			echo -e "\e[31m[Warning] File already exists in destination directory '$destination_directory'.\e[0m"
 		fi
 	else
-		echo "[Warning] File '$ourlPath' not found in source directory."
+		printf "\n"
+		echo -e "\e[31m[Warning] File '$ourlPath' not found in source directory.\e[0m"
+		exit 1
 	fi
 
 	Dir=config/wordlists
@@ -213,7 +216,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] ourl searching for subs\n=====================================\n"
-	"$HOME/.local/bin/ourl" -subs -p -a "$domain" | tee -a allresults/ourl.txt  || exit 1
+	"$HOME/.local/bin/ourl" -subs -p -a "$domain" | tee -a allresults/ourl.txt
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITHUB\n=====================================\n"
