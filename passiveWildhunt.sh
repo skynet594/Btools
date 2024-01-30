@@ -108,15 +108,15 @@ passive() {
 	fi
 
 	ourlPath="$Btools_path/ptool/ourl"
-	destination_directory="/usr/bin"
-	if [ -e "$file_to_move" ]; then
-		if [ ! -e "$destination_directory/$(basename "$file_to_move")" ]; then
-			mv "$file_to_move" "$destination_directory" && echo "[+] File moved successfully to '$destination_directory'."
+	destination_directory="$HOME/.local/bin"
+	if [ -e "$ourlPath" ]; then
+		if [ ! -e "$destination_directory/$(basename "$ourlPath")" ]; then
+			mv "$ourlPath" "$destination_directory" && echo "[+] File moved successfully to '$destination_directory'."
 		else
 			echo "[Warning] File already exists in destination directory '$destination_directory'."
 		fi
 	else
-		echo "[Warning] File '$file_to_move' not found in source directory."
+		echo "[Warning] File '$ourlPath' not found in source directory."
 	fi
 
 	Dir=config/wordlists
@@ -213,7 +213,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] ourl searching for subs\n=====================================\n"
-	ourl -subs -p -a "$domain" | tee -a allresults/ourl.txt
+	"$HOME/.local/bin/ourl" -subs -p -a "$domain" | tee -a allresults/ourl.txt  || exit 1
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITHUB\n=====================================\n"
