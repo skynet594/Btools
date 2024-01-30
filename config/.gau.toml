@@ -1,0 +1,19 @@
+threads = 2
+verbose = false
+retries = 15
+subdomains = true
+parameters = false
+providers = ["wayback","commoncrawl","otx","urlscan"]
+blacklist = []
+json = false
+
+[urlscan]
+  apikey = "97c57c15-7100-454e-a3ca-15372b83c49c"
+
+[filters]
+  from = ""
+  to = ""
+  matchstatuscodes = []
+  matchmimetypes = []
+  filterstatuscodes = []
+  filtermimetypes = []

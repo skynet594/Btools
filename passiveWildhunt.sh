@@ -122,6 +122,21 @@ passive() {
 		exit 1
 	fi
 
+	gauPath="$config_path/.gau.toml"
+	dest_dir="$HOME"
+	if [ -e "$ourlPath" ]; then
+		if [ ! -e "$dest_dir/$(basename "$gauPath")" ]; then
+			mv "$gauPath" "$dest_dir" && echo "[+] File moved successfully to '$dest_dir'."
+		else
+			printf "\n"
+			echo -e "\e[31m[Warning] File already exists in destination directory '$dest_dir'.\e[0m"
+		fi
+	else
+		printf "\n"
+		echo -e "\e[31m[Warning] File '$gauPath' not found in source directory.\e[0m"
+		exit 1
+	fi
+
 	Dir=config/wordlists
 	if test -d "$Dir"; then
 		rm -rf "$Dir"
