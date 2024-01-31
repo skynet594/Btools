@@ -1,20 +1,20 @@
 # NOTICE: THESE ENTRIES ARE COMMENTED BY DEFAULT
 # Please be sure to uncomment when inserting API keys, etc.
-home: ~/.bbot
-# scope_report_distance: 0
-dns_resolution: true
-max_threads: 25
-dns_queries_per_second: 1000
-web_requests_per_second: 100
-status_frequency: 15
+ home: ~/.bbot
+ scope_report_distance: 5
+ dns_resolution: true
+ max_threads: 25
+ dns_queries_per_second: 1000
+ web_requests_per_second: 100
+ status_frequency: 15
 # http_proxy: null
-user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97
+ user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.2151.97
 # web_spider_distance: 0
 # web_spider_depth: 1
 # web_spider_links_per_page: 25
-# scope_search_distance: 0
-# scope_dns_search_distance: 1
-# dns_resolve_distance: 5
+ scope_search_distance: 5
+ scope_dns_search_distance: 5
+ dns_resolve_distance: 5
 # speculate: true
 # excavate: true
 # aggregate: true
@@ -72,224 +72,222 @@ user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 # - SRV:mail.protection.outlook.com
 # - CNAME:mail.protection.outlook.com
 # - TXT:mail.protection.outlook.com
-modules:
-  oauth:
-    try_all: true
-  virustotal:
-    { 56e6eba7945c79976be558e1ffb828453e3f44c0b42dfb6b372663637d335280 }
-  #   subdomaincenter: {}
-  internetdb: {}
-  #   c99: {}
-  #   credshed:
-  #     credshed_url: ''
-  shodan_dns: { aGplIL53fsxry9ljOOMAJOr6U7MLabVP }
-  zoomeye:
-    max_pages: 20
-    include_related: false
-  bucket_google:
-    permutations: true
-  #   skymem: {}
-  securitytrails: { 0ArTfyyCJ4GzPo14vE8mW3LVs7HUcPfg }
-  #   badsecrets: {}
-  #   ffuf_shortnames:
-  #     wordlist: ''
-  #     wordlist_extensions: ''
-  #     lines: 1000000
-  #     max_depth: 1
-  #     version: 2.0.0
-  #     extensions: ''
-  #     ignore_redirects: true
-  #     find_common_prefixes: false
-  #     find_delimiters: true
-  #   github_codesearch:
-  #     limit: 100
-  dnszonetransfer:
-    timeout: 10
-  #   wayback:
-  #     urls: false
-  #     garbage_threshold: 10
-  #   iis_shortnames:
-  #     detect_only: true
-  #     max_node_count: 50
-  #   smuggler: {}
-  #   viewdns: {}
-  #   azure_realm: {}
-  chaos: { fcc92d0e-cf05-4983-8fb1-fd63356eb540 }
-  hunt: { 899a37ae-7087-40a5-a8d8-c7ddf02d0cb9 }
-  #   anubisdb: {}
-  #   ntlm:
-  #     try_all: false
-  #   git: {}
-  #   bucket_azure:
-  #     permutations: false
-  #   bucket_amazon:
-  #     permutations: false
-  #   url_manipulation:
-  #     allow_redirects: true
-  #   pgp:
-  #     search_urls:
-  #     - https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=vindex&search=<query>
-  #     - http://the.earth.li:11371/pks/lookup?fingerprint=on&op=vindex&search=<query>
-  #   certspotter: {}
-  #   crt: {}
-  leakix: { GKPsnCwBD1sQwo8JPzuS_taShalimxJ4JIX8n9eRWlPSDQtz }
-  #   ipstack: {}
-  #   filedownload:
-  #     extensions:
-  #     - bak
-  #     - bash
-  #     - bashrc
-  #     - conf
-  #     - cfg
-  #     - crt
-  #     - csv
-  #     - db
-  #     - sqlite
-  #     - doc
-  #     - docx
-  #     - exe
-  #     - ica
-  #     - indd
-  #     - ini
-  #     - jar
-  #     - key
-  #     - pub
-  #     - log
-  #     - markdown
-  #     - md
-  #     - msi
-  #     - odg
-  #     - odp
-  #     - ods
-  #     - odt
-  #     - pdf
-  #     - pem
-  #     - pps
-  #     - ppsx
-  #     - ppt
-  #     - pptx
-  #     - ps1
-  #     - raw
-  #     - rdp
-  #     - sh
-  #     - sql
-  #     - swp
-  #     - sxw
-  #     - tar
-  #     - tar.gz
-  #     - zip
-  #     - txt
-  #     - vbs
-  #     - wpd
-  #     - xls
-  #     - xlsx
-  #     - xml
-  #     - yml
-  #     - yaml
-  #     max_filesize: 10MB
-  #   bucket_firebase:
-  #     permutations: false
-  #   wafw00f:
-  #     generic_detect: true
-  #   myssl: {}
-  #   ip2location:
-  #     lang: ''
-  #   nmap:
-  #     top_ports: 100
-  #     ports: ''
-  #     timing: T4
-  #     skip_host_discovery: true
-  hunterio: { 67bfa849fb69a22430c5f3ff1bf12b953f26dfd6 }
-  #   dnsdumpster: {}
-  #   builtwith:
-  #     redirects: true
-  #   host_header: {}
-  #   sslcert:
-  #     timeout: 5.0
-  #     skip_non_ssl: true
-  #   wappalyzer: {}
-  #   sublist3r: {}
-  #   bypass403: {}
-  binaryedge:
-    max_records: 1000
-  #   ipneighbor:
-  #     num_bits: 4
-  #   azure_tenant: {}
-  #   digitorus: {}
-  #   dnscommonsrv: {}
-  #   riddler: {}
-  #   httpx:
-  #     threads: 50
-  #     in_scope_only: true
-  #     version: 1.2.5
-  #     max_response_size: 5242880
-  #   generic_ssrf: {}
-  #   dehashed: {}
-  #   paramminer_cookies:
-  #     wordlist: ''
-  #     http_extract: true
-  #     skip_boring_words: true
-  #   masscan:
-  #     top_ports: 100
-  #     ports: ''
-  #     rate: 600
-  #     wait: 5
-  #     ping_first: false
-  #     ping_only: false
-  #     use_cache: false
-  #   crobat: {}
-  #   threatminer: {}
-  censys:
-    max_pages: 5
-  #   urlscan:
-  #     urls: false
-  #   robots:
-  #     include_sitemap: false
-  #     include_allow: true
-  #     include_disallow: true
-  #   postman: {}
-  #   gowitness:
-  #     version: 2.4.2
-  #     threads: 4
-  #     timeout: 10
-  #     resolution_x: 1440
-  #     resolution_y: 900
-  #     output_path: ''
-  #   ajaxpro: {}
-  #   columbus: {}
-  #   bucket_digitalocean:
-  #     permutations: false
-  #   otx: {}
-  #   nsec: {}
-  fullhunt: { 7eb22115-8a32-4538-9387-0d2b9baeee32 }
-  bevigil:
-  #     urls: false
-  #   paramminer_headers:
-  #     wordlist: ''
-  #     http_extract: true
-  #     skip_boring_words: true
-  #   secretsdb:
-  #     min_confidence: 99
-  #     signatures: https://raw.githubusercontent.com/blacklanternsecurity/secrets-patterns-db/master/db/rules-stable.yml
-  #   hackertarget: {}
-  #   github_org:
-  #     include_members: true
-  #     include_member_repos: false
-  #   fingerprintx:
-  #     version: 1.1.4
-  passivetotal:
-    { 3b95fc5b3c4de663a80d32c294cddd25494c92d20959d39a4a3d41db2f61268e }
-  #   emailformat: {}
-  #   sitedossier: {}
-  #   social: {}
-  #   bucket_file_enum:
-  #     file_limit: 50
-  #   telerik:
-  #     exploit_RAU_crypto: false
-  massdns:
-    wordlist: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/subdomains-top1million-5000.txt
-    max_resolvers: 1000
-    max_mutations: 500
+ modules:
+   oauth:
+     try_all: true
+   virustotal: {56e6eba7945c79976be558e1ffb828453e3f44c0b42dfb6b372663637d335280}
+#   subdomaincenter: {}
+   internetdb: {}
+#   c99: {}
+#   credshed:
+#     credshed_url: ''
+   shodan_dns: {aGplIL53fsxry9ljOOMAJOr6U7MLabVP}
+   zoomeye:
+     max_pages: 20
+     include_related: false
+   bucket_google:
+     permutations: true
+#   skymem: {}
+   securitytrails: {0ArTfyyCJ4GzPo14vE8mW3LVs7HUcPfg}
+#   badsecrets: {}
+#   ffuf_shortnames:
+#     wordlist: ''
+#     wordlist_extensions: ''
+#     lines: 1000000
+#     max_depth: 1
+#     version: 2.0.0
+#     extensions: ''
+#     ignore_redirects: true
+#     find_common_prefixes: false
+#     find_delimiters: true
+#   github_codesearch:
+#     limit: 100
+   dnszonetransfer:
+     timeout: 10
+#   wayback:
+#     urls: false
+#     garbage_threshold: 10
+#   iis_shortnames:
+#     detect_only: true
+#     max_node_count: 50
+#   smuggler: {}
+#   viewdns: {}
+#   azure_realm: {}
+   chaos: {fcc92d0e-cf05-4983-8fb1-fd63356eb540}
+   hunt: {899a37ae-7087-40a5-a8d8-c7ddf02d0cb9}
+#   anubisdb: {}
+#   ntlm:
+#     try_all: false
+#   git: {}
+#   bucket_azure:
+#     permutations: false
+#   bucket_amazon:
+#     permutations: false
+#   url_manipulation:
+#     allow_redirects: true
+#   pgp:
+#     search_urls:
+#     - https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=vindex&search=<query>
+#     - http://the.earth.li:11371/pks/lookup?fingerprint=on&op=vindex&search=<query>
+#   certspotter: {}
+#   crt: {}
+   leakix: {GKPsnCwBD1sQwo8JPzuS_taShalimxJ4JIX8n9eRWlPSDQtz}
+#   ipstack: {}
+#   filedownload:
+#     extensions:
+#     - bak
+#     - bash
+#     - bashrc
+#     - conf
+#     - cfg
+#     - crt
+#     - csv
+#     - db
+#     - sqlite
+#     - doc
+#     - docx
+#     - exe
+#     - ica
+#     - indd
+#     - ini
+#     - jar
+#     - key
+#     - pub
+#     - log
+#     - markdown
+#     - md
+#     - msi
+#     - odg
+#     - odp
+#     - ods
+#     - odt
+#     - pdf
+#     - pem
+#     - pps
+#     - ppsx
+#     - ppt
+#     - pptx
+#     - ps1
+#     - raw
+#     - rdp
+#     - sh
+#     - sql
+#     - swp
+#     - sxw
+#     - tar
+#     - tar.gz
+#     - zip
+#     - txt
+#     - vbs
+#     - wpd
+#     - xls
+#     - xlsx
+#     - xml
+#     - yml
+#     - yaml
+#     max_filesize: 10MB
+#   bucket_firebase:
+#     permutations: false
+#   wafw00f:
+#     generic_detect: true
+#   myssl: {}
+#   ip2location:
+#     lang: ''
+#   nmap:
+#     top_ports: 100
+#     ports: ''
+#     timing: T4
+#     skip_host_discovery: true
+   hunterio: {67bfa849fb69a22430c5f3ff1bf12b953f26dfd6}
+#   dnsdumpster: {}
+#   builtwith:
+#     redirects: true
+#   host_header: {}
+#   sslcert:
+#     timeout: 5.0
+#     skip_non_ssl: true
+#   wappalyzer: {}
+#   sublist3r: {}
+#   bypass403: {}
+   binaryedge:
+     max_records: 1000
+#   ipneighbor:
+#     num_bits: 4
+#   azure_tenant: {}
+#   digitorus: {}
+#   dnscommonsrv: {}
+#   riddler: {}
+#   httpx:
+#     threads: 50
+#     in_scope_only: true
+#     version: 1.2.5
+#     max_response_size: 5242880
+#   generic_ssrf: {}
+#   dehashed: {}
+#   paramminer_cookies:
+#     wordlist: ''
+#     http_extract: true
+#     skip_boring_words: true
+#   masscan:
+#     top_ports: 100
+#     ports: ''
+#     rate: 600
+#     wait: 5
+#     ping_first: false
+#     ping_only: false
+#     use_cache: false
+#   crobat: {}
+#   threatminer: {}
+   censys:
+     max_pages: 5
+#   urlscan:
+#     urls: false
+#   robots:
+#     include_sitemap: false
+#     include_allow: true
+#     include_disallow: true
+   postman: {PMAK-65b932407cfccf00013b9465-dee9a22ea4ac51c8309ac745be7cb78a25}
+#   gowitness:
+#     version: 2.4.2
+#     threads: 4
+#     timeout: 10
+#     resolution_x: 1440
+#     resolution_y: 900
+#     output_path: ''
+#   ajaxpro: {}
+#   columbus: {}
+   bucket_digitalocean:
+     permutations: true
+   otx: {972af573945ee72e2cb400622cd7d2d1e1821ce2918013b3e1e1f91f46f3706f}
+#   nsec: {}
+   fullhunt: {7eb22115-8a32-4538-9387-0d2b9baeee32}
+   bevigil:
+#     urls: false
+#   paramminer_headers:
+#     wordlist: ''
+#     http_extract: true
+#     skip_boring_words: true
+   secretsdb:
+     min_confidence: 99
+     signatures: https://raw.githubusercontent.com/blacklanternsecurity/secrets-patterns-db/master/db/rules-stable.yml
+#   hackertarget: {}
+#   github_org:
+#     include_members: true
+#     include_member_repos: false
+#   fingerprintx:
+#     version: 1.1.4
+   passivetotal: {3b95fc5b3c4de663a80d32c294cddd25494c92d20959d39a4a3d41db2f61268e}
+#   emailformat: {}
+#   sitedossier: {}
+#   social: {}
+#   bucket_file_enum:
+#     file_limit: 50
+   telerik:
+     exploit_RAU_crypto: false
+   massdns:
+     wordlist: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/subdomains-top1million-5000.txt
+     max_resolvers: 1000
+     max_mutations: 500
 #   rapiddns: {}
 #   paramminer_getparams:
 #     wordlist: ''
@@ -297,8 +295,8 @@ modules:
 #     skip_boring_words: true
 #   subdomain_hijack:
 #     fingerprints: https://raw.githubusercontent.com/EdOverflow/can-i-take-over-xyz/master/fingerprints.json
-#   vhost:
-#     wordlist: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/subdomains-top1million-5000.txt
+   vhost:
+     wordlist: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/subdomains-top1million-5000.txt
 #     force_basehost: ''
 #     lines: 5000
 #   dastardly: {}
@@ -322,7 +320,7 @@ modules:
 #     version: 2.0.0
 #     extensions: ''
 #   affiliates: {}
-#   asn: {}
+   asn: {ca6b61c75a1ea9}
 # output_modules:
 #   discord:
 #     webhook_url: ''
