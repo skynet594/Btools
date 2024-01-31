@@ -269,7 +269,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] BBOT \n=====================================\n"
-	bbot -t "$domain" -f subdomain-enum -rf passive -y --force -o bbot-results --name $domain
+	bbot -t "$domain" -f subdomain-enum -rf passive -y --force  -o bbot-results --name $domain --config $HOME/.config/bbot/secrets.yml
 	printf "\n"
 
 	printf "[-] AMASS SEARCHING FOR SUBDOMAINS IT MIGHT TAKE LONG-PASSIVE\n=====================================\n"
