@@ -26,11 +26,11 @@ printf '[>] My Personal Tools\n'
 
 packages=(
     "github.com/SpeedyQweku/dnsdump@latest"
-    "github.com/SpeedyQweku/sfuzz@0.0.1"
+    "github.com/SpeedyQweku/sfuzz@v0.0.1"
     "github.com/SpeedyQweku/sendTele@latest"
     "github.com/SpeedyQweku/RealTime@latest"
-    "github.com/SpeedyQweku/dfuzz@0.0.2"
-    "github.com/SpeedyQweku/qfuzz@0.0.1"
+    "github.com/SpeedyQweku/dfuzz@v0.0.2"
+    "github.com/SpeedyQweku/qfuzz@v0.0.1"
 )
 
 for package in "${packages[@]}"; do
