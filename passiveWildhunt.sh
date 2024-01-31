@@ -156,11 +156,11 @@ passive() {
 	fi
 
 	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/sfuzz/main/wordlist/swaggerwordlist.txt -P "$DirW" || {
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/swaggerwordlist.txt -P "$DirW" || {
 		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"
 		exit 1
 	}
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/dfuzz/main/wordlist/secretlist.txt -P "$DirW" || {
+	wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/secretlist.txt -P "$DirW" || {
 		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"
 		exit 1
 	}
