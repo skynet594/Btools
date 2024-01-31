@@ -29,7 +29,7 @@ packages=(
     "github.com/SpeedyQweku/sfuzz@0.0.1"
     "github.com/SpeedyQweku/sendTele@latest"
     "github.com/SpeedyQweku/RealTime@latest"
-    "github.com/SpeedyQweku/dfuzz@0.0.1"
+    "github.com/SpeedyQweku/dfuzz@0.0.2"
     "github.com/SpeedyQweku/qfuzz@0.0.1"
 )
 
