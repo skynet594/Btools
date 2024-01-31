@@ -30,6 +30,7 @@ packages=(
     "github.com/SpeedyQweku/sendTele@latest"
     "github.com/SpeedyQweku/RealTime@latest"
     "github.com/SpeedyQweku/dfuzz@latest"
+    "github.com/SpeedyQweku/qfuzz@latest"
 )
 
 for package in "${packages[@]}"; do
