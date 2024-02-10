@@ -235,15 +235,15 @@ passive() {
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITHUB\n=====================================\n"
-	github-subdomains -d "$domain" -t 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,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 -o allresults/githubsubs.txt
+	github-subdomains -d "$domain" -t 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,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 -o allresults/githubsubs.txt
 	printf "\n"
 
 	printf "[-] SEARCHING FOR SUBDOMAINS ON GITLAB\n=====================================\n"
-	gitlab-subdomains -d "$domain" -t glpat-AeWyCS55u2TNateyax4Q,glpat-baUgPcXWN-N_opxisyvJ | tee -a allresults/gitlabsubs.txt
+	gitlab-subdomains -d "$domain" -t glpat-W8e4e4DjbpxFbnJswJGo | tee -a allresults/gitlabsubs.txt
 	printf "\n"
 
 	printf "[-] SHOSUBGO SEARCHING FOR SUBDOMAINS\n=====================================\n"
-	shosubgo -d "$domain" -s oBrxB7VlTtqCKznyDAxTjcB3I7Lu7EvA | tee -a allresults/shosubgo.txt
+	shosubgo -d "$domain" -s aGplIL53fsxry9ljOOMAJOr6U7MLabVP | tee -a allresults/shosubgo.txt
 	printf "\n"
 
 	printf "[-] GAU SEARCHING FOR SUBDOMAINS\n=====================================\n"
