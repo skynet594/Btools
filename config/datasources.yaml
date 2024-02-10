@@ -51,8 +51,8 @@ datasources:
     ttl: 10080
     creds:
       account: 
-        apikey: ba1575a7-cbea-4a37-9458-9a17e0fecd64
-        secret: 4kkX33jerKDZy61H6dkcHKTmsr41COBL
+        apikey: b546c639-ee45-48e4-a4b4-fb7742f43ad8
+        secret: CXgQCe0Sfu6CNLUvfj00Bqj5Gfws371V
   - name: Chaos
     ttl: 4320
     creds:
@@ -210,7 +210,7 @@ datasources:
     ttl: 10080
     creds:
       account: 
-        apikey: 56e6eba7945c79976be558e1ffb828453e3f44c0b42dfb6b372663637d335280
+        apikey: e73951d91bfa7ba223886b4f39234b12d3def3a830e98fe54c8354d1665a15bc
   - name: WhoisXMLAPI
     creds:
       account: 
