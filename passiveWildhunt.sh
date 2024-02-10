@@ -124,7 +124,7 @@ passive() {
 
 	gauPath="$dir2/config/.gau.toml"
 	dest_dir="$HOME"
-	if [ -e "$ourlPath" ]; then
+	if [ -e "$gauPath" ]; then
 		if [ ! -e "$dest_dir/$(basename "$gauPath")" ]; then
 			mv "$gauPath" "$dest_dir" && echo "[+] File moved successfully to '$dest_dir'."
 		else
@@ -269,7 +269,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] BBOT \n=====================================\n"
-	bbot -t "$domain" -f subdomain-enum -rf passive -y --force  -o bbot-results --name $domain --config $HOME/.config/bbot/secrets.yml
+	sudo bbot -t "$domain" -f subdomain-enum -rf passive -y --force  -o bbot-results --name $domain --config $HOME/.config/bbot/secrets.yml
 	printf "\n"
 
 	printf "[-] AMASS SEARCHING FOR SUBDOMAINS IT MIGHT TAKE LONG-PASSIVE\n=====================================\n"
