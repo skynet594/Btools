@@ -85,11 +85,11 @@ CheckerScan() {
 
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
-	sfuzz -l $DirF/AllLiveDomains.txt -c 30 -w $DirW/swaggerwordlist.txt -o $DirF/ValidSwagger.txt
+	qfuzz -l $DirF/AllLiveDomains.txt -c 50 -w $DirW/swaggerwordlist.txt -ms swagger,openai -o $DirF/ValidSwagger.txt
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	dfuzz -l $DirF/AllLiveDomains.txt -c 30 -w $DirW/secretlist.txt -o $DirF/ValidSecrets.txt
+	qfuzz -l $DirF/LiveWebServers.txt -c 50 -w $DirW/secretlist.txt -o $DirF/ValidWebServerSecrets.txt
 
 	##Scanning for dns take over.
 	printf "[|] SCANNING FOR  DNSTAKEOVER\n====================================================================\n"
@@ -127,11 +127,11 @@ portscan() {
 
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
-	sfuzz -l $DirF/LiveWebServers.txt -c 30 -w $DirW/swaggerwordlist.txt -o $DirF/ValidWebServerSwagger.txt
+	qfuzz -l $DirF/AllLiveDomains.txt -c 50 -w $DirW/swaggerwordlist.txt -ms swagger,openai -o $DirF/ValidSwagger.txt
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS\n====================================================================\n"
-	dfuzz -l $DirF/LiveWebServers.txt -c 30 -w $DirW/secretlist.txt -o $DirF/ValidWebServerSecrets.txt
+	qfuzz -l $DirF/LiveWebServers.txt -c 50 -w $DirW/secretlist.txt -o $DirF/ValidWebServerSecrets.txt
 }
 
 sendTele -c "$CHATID" -t "$TOKEN" -t "$1" -a
