@@ -1,7 +1,7 @@
 # NOTICE: THESE ENTRIES ARE COMMENTED BY DEFAULT
 # Please be sure to uncomment when inserting API keys, etc.
  home: ~/.bbot
- scope_report_distance: 5
+ scope_report_distance: 3
  dns_resolution: true
  max_threads: 25
  dns_queries_per_second: 1000
@@ -12,9 +12,9 @@
 # web_spider_distance: 0
 # web_spider_depth: 1
 # web_spider_links_per_page: 25
- scope_search_distance: 5
- scope_dns_search_distance: 5
- dns_resolve_distance: 5
+ scope_search_distance: 3
+ scope_dns_search_distance: 3
+ dns_resolve_distance: 3
 # speculate: true
 # excavate: true
 # aggregate: true
