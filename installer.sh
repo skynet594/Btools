@@ -114,6 +114,9 @@ go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 printf '[>] subjack'
 go install github.com/haccer/subjack@latest
 
+printf '[>] qsreplace'
+go install github.com/tomnomnom/qsreplace@latest
+
 printf '[>] trufflehog'
 curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b /usr/local/bin
 
