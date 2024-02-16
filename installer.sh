@@ -28,7 +28,7 @@ packages=(
     "github.com/SpeedyQweku/dnsdump@latest"
     "github.com/SpeedyQweku/sendTele@latest"
     "github.com/SpeedyQweku/RealTime@latest"
-    "github.com/SpeedyQweku/qfuzz@v0.1.4"
+    "github.com/SpeedyQweku/qfuzz@v0.1.5"
     # "github.com/SpeedyQweku/sfuzz@v0.0.1"
     # "github.com/SpeedyQweku/dfuzz@v0.0.1"
 )
