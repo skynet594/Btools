@@ -298,12 +298,12 @@ CheckerScan() {
 
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 50 -w $DirW/swaggerwordlist.txt -ms swagger,openapi -o $DirR/ValidSwagger.txt -v
+	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/swaggerwordlist.txt -ms "swagger ui",openapi -o $DirR/ValidSwagger.txt -ra
 	printf "\n"
 
 	# ##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 50 -w $DirW/secretlist.txt -o $DirR/ValidSecrets.txt -v
+	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/secretlist.txt -o $DirR/ValidSecrets.txt -ra
 	printf "\n"
 
 	##Scanning for dns take over.
@@ -318,7 +318,7 @@ CheckerScan() {
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 50 -w $DirW/admin.txt -o $DirR/adminpanel.txt -v
+	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/admin.txt -o $DirR/adminpanel.txt -ra
 	printf "\n"
 
 	##Removes http/https
@@ -348,12 +348,12 @@ portscan() {
 
 	##scans for swagger files on webserver ports
 	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
-	qfuzz -l $DirR/LiveWebServers.txt -c 50 -w $DirW/swaggerwordlist.txt -ms swagger,openapi -o $DirR/ValidWebServerSwagger.txt -v
+	qfuzz -l $DirR/LiveWebServers.txt -c 70 -w $DirW/swaggerwordlist.txt -ms "swagger ui",openapi -o $DirR/ValidWebServerSwagger.txt -ra
 	printf "\n"
 
 	##scans for secrets file on webserver ports
 	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	qfuzz -l $DirR/LiveWebServers.txt -c 50 -w $DirW/secretlist.txt -o $DirR/ValidWebServerSecrets.txt -v
+	qfuzz -l $DirR/LiveWebServers.txt -c 70 -w $DirW/secretlist.txt -o $DirR/ValidWebServerSecrets.txt -ra
 	printf "\n"
 }
 
