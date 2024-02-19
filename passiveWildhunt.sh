@@ -9,13 +9,13 @@ fi
 CONFIG_FILE="$HOME/.config.json"
 
 if [ ! -f "$CONFIG_FILE" ]; then
-    echo "Error: Config file '$CONFIG_FILE' not found."
-    exit 1
+	echo "Error: Config file '$CONFIG_FILE' not found."
+	exit 1
 fi
 
-CHATID=$(jq -r '.CHATID' < "$CONFIG_FILE" | tr -d '[:space:]')
-TOKEN=$(jq -r '.TOKEN' < "$CONFIG_FILE" | tr -d '[:space:]')
-sshfile=$(jq -r '.sshfile' < "$CONFIG_FILE"| tr -d '[:space:]')
+CHATID=$(jq -r '.CHATID' <"$CONFIG_FILE" | tr -d '[:space:]')
+TOKEN=$(jq -r '.TOKEN' <"$CONFIG_FILE" | tr -d '[:space:]')
+sshfile=$(jq -r '.sshfile' <"$CONFIG_FILE" | tr -d '[:space:]')
 
 # Check if the json value are provided
 if [ -z "$CHATID" ]; then
@@ -269,7 +269,7 @@ passive() {
 	printf "\n"
 
 	printf "[-] BBOT \n=====================================\n"
-	sudo bbot -t "$domain" -f subdomain-enum -rf passive -y --force  -o bbot-results --name $domain --config $HOME/.config/bbot/secrets.yml
+	sudo bbot -t "$domain" -f subdomain-enum -rf passive -y --force -o bbot-results --name $domain --config $HOME/.config/bbot/secrets.yml
 	printf "\n"
 
 	printf "[-] AMASS SEARCHING FOR SUBDOMAINS IT MIGHT TAKE LONG-PASSIVE\n=====================================\n"
@@ -284,42 +284,46 @@ passive() {
 	printf "\n"
 
 	printf "[-] COMBING ALL RESULTS \n=====================================\n"
-	cat * ../bbot-results/$domain/subdomains.txt | sort -u | tee -a uniqued.txt
+	cat * ../bbot-results/$domain/subdomains.txt | sort -u | tee -a allSubdomains.txt
+	printf "\n"
+
+	printf "[-] GETTING ALL INSCOPE RESULTS \n=====================================\n"
+	sc -l "$1" -d allSubdomain.txt | tee -a uniqued.txt
 	cd $dir2 && cd ..
 	printf "\n"
 }
 
+## Checking for live domain
 CheckerScan() {
-	## Checking for live domain
 	printf "[|] CHECKING %s FOR LIVE DOMAINS\n=====================================\n"
 	cat $DirR/passiveResult.txt | $HOME/go/bin/httpx -t 70 -o $DirR/AllLiveDomains.txt
 	sendTele -c "$CHATID" -t "$TOKEN" -m '{nl}Httpx scan for [CheckerScan] is done.{nl}Go start your URL gathering.{nl}Results name : [AllLiveDomains.txt].'
 	printf "\n"
 
 	##scans for swagger files on webserver ports
-	printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/swaggerwordlist.txt -ms "swagger ui",openapi -o $DirR/ValidSwagger.txt -ra
-	printf "\n"
+	# printf "[|] SCANNING FOR SWAGGER PATH ON WEBSERVER PORTS\n====================================================================\n"
+	# qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/swaggerwordlist.txt -ms "swagger ui",openapi -o $DirR/ValidSwagger.txt -ra
+	# printf "\n"
 
 	# ##scans for secrets file on webserver ports
-	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/secretlist.txt -o $DirR/ValidSecrets.txt -ra
-	printf "\n"
+	# printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
+	# qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/secretlist.txt -o $DirR/ValidSecrets.txt -ra
+	# printf "\n"
 
 	##Scanning for dns take over.
-	printf "[|] SCANNING FOR  DNSTAKEOVER\n====================================================================\n"
-	dnstake -t $DirR/passiveResult.txt -c 50 -o $DirR/dnstakeover.out
-	printf "\n"
+	# printf "[|] SCANNING FOR  DNSTAKEOVER\n====================================================================\n"
+	# dnstake -t $DirR/passiveResult.txt -c 50 -o $DirR/dnstakeover.out
+	# printf "\n"
 
 	##Scanning for subdomain takeover.
-	printf "[|] SCANNING FOR SUBDOMAIN DNSTAKEOVER\n====================================================================\n"
-	nuclei -l $DirR/passiveResult.txt -t $DirT/detect-all-takeovers.yaml -o $DirR/subtakeover.txt
-	printf "\n"
+	# printf "[|] SCANNING FOR SUBDOMAIN DNSTAKEOVER\n====================================================================\n"
+	# nuclei -l $DirR/passiveResult.txt -t $DirT/detect-all-takeovers.yaml -o $DirR/subtakeover.txt
+	# printf "\n"
 
 	##scans for secrets file on webserver ports
-	printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
-	qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/admin.txt -o $DirR/adminpanel.txt -ra
-	printf "\n"
+	# printf "[|] SCANNING FOR SECRET FILES ON WEBSERVER PORTS \n====================================================================\n"
+	# qfuzz -l $DirR/AllLiveDomains.txt -c 70 -w $DirW/admin.txt -o $DirR/adminpanel.txt -ra
+	# printf "\n"
 
 	##Removes http/https
 	printf "[|] REMOVING HTTPS/HTTP FROM SUBDOMAINS\n==================================================================\n"
@@ -327,9 +331,9 @@ CheckerScan() {
 	printf "\n"
 
 	##Using smap for port scan
-	printf "[|] RUNNING SMAP\n====================================================================\n"
-	smap -iL $DirR/passiveResult.txt -oX $DirR/output.xml
-	printf "\n"
+	# printf "[|] RUNNING SMAP\n====================================================================\n"
+	# smap -iL $DirR/passiveResult.txt -oX $DirR/output.xml
+	# printf "\n"
 }
 
 portscan() {
@@ -371,5 +375,5 @@ for subfolder in "$folder_path"/*/; do
 	fi
 done
 
-cd $folder_path && CheckerScan && portscan
+cd $folder_path && CheckerScan # && portscan
 sendTele -c "$CHATID" -t "$TOKEN" -m "{nl}Passive Subdomain Enumeration Done, Enjoy!!!"
