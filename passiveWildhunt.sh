@@ -150,26 +150,26 @@ passive() {
 	fi
 	mkdir "$DirRe"
 
-	DirW=Wordlists
-	if test -d "$DirW"; then
-		rm -rf "$DirW"
-	fi
+	# DirW=Wordlists
+	# if test -d "$DirW"; then
+	# 	rm -rf "$DirW"
+	# fi
 
-	mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/swaggerwordlist.txt -P "$DirW" || {
-		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"
-		exit 1
-	}
-	wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/secretlist.txt -P "$DirW" || {
-		echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"
-		exit 1
-	}
+	# mkdir "$DirW" && wget -q https://raw.githubusercontent.com/emadshanab/admin-paths/main/admin.txt -P "$DirW"
+	# wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/swaggerwordlist.txt -P "$DirW" || {
+	# 	echo -e "\e[31mError: Download failed or repository is private. Make it public. File: swaggerwordlist.txt\e[0m"
+	# 	exit 1
+	# }
+	# wget -q https://raw.githubusercontent.com/SpeedyQweku/myWL/main/secretlist.txt -P "$DirW" || {
+	# 	echo -e "\e[31mError: Download failed or repository is private. Make it public. File: secretlist.txt\e[0m"
+	# 	exit 1
+	# }
 
-	DirT=nuclei-templates
-	if test -d "$DirT"; then
-		rm -rf "$DirT"
-	fi
-	mkdir "$DirT" && wget -q https://raw.githubusercontent.com/projectdiscovery/nuclei-templates/8b2bc8ab8ef801d4342bb4ec4fedb5460296da29/subdomain-takeover/detect-all-takeovers.yaml -P "$DirT"
+	# DirT=nuclei-templates
+	# if test -d "$DirT"; then
+	# 	rm -rf "$DirT"
+	# fi
+	# mkdir "$DirT" && wget -q https://raw.githubusercontent.com/projectdiscovery/nuclei-templates/8b2bc8ab8ef801d4342bb4ec4fedb5460296da29/subdomain-takeover/detect-all-takeovers.yaml -P "$DirT"
 
 	DirR=Result
 	if test -d "$DirR"; then
